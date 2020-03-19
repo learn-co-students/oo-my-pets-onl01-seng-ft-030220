@@ -3,9 +3,9 @@ require 'pry'
 class Owner
 
   @@all = []
+  @@pets = []
 
-  attr_accessor :pets, :cats, :owner, :mood, :count
-  attr_writer :dogs
+  attr_accessor :pets, :cats, :owner, :mood, :count, :dogs
   attr_reader :species, :name
 
   def initialize(name, species = "human")
@@ -24,6 +24,8 @@ class Owner
 
   def cats     #expected to eq 3
     Cat.all.select { |cats| cats.owner == self }
+    @cats = Cat.all.select { |cats| cats.owner == self }
+    @@pets << cats
   end
 
   def dogs      #expected to eq 3
@@ -61,13 +63,52 @@ class Owner
     num_dogs = self.dogs.count
     num_cats = self.cats.count
     "I have #{num_dogs} dog(s), and #{num_cats} cat(s)."
+    @@pets << dogs
+  end
+
+  def buy_cat(owner, cats)
+    @cats = 0
+    @cats += 1
+    self.cats << cats.owner
+    buy_cat
+  end
+
+  def buy_dog(dogs)
+    dogs = 0
+    until dogs = 3
+    dogs += 1
+    end
+    Dog.all.select { |dogs| owner.dogs }
+  end
+
+  def walk_dogs
+    dogs.select { |dogs| dogs.mood = "happy" }
+  end
+
+  def feed_cats
+    cats.select { |cats| cats.mood = "happy" }
+  end
+
+  def sell_pets
+    cats.select { |cats| cats.mood = "nervous" }
+    dogs.select { |dogs| dogs.mood = "nervous" }
+    if dogs.nil?
+    self.cats.garbage_collect
+    end
+  end
+
+  def list_pets
+    "I have #{dogs.owner.length} dog(s), and #{cats.owner.length} cat(s)."
   end
 
     def self.all
-      @@all  #expect(Owner.all).to include(@owner)
+      @@all
     end
 
+
     def self.count
+
+      def self.count
       @@all.size
     end
 
