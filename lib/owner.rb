@@ -1,28 +1,77 @@
-class Owner
+require 'pry'
 
-  attr_accessor :name, :species, :human
+class Owner
 
   @@all = []
 
-  def initialize(name, species)
-    @name = name.freeze # has a name and cannot be changed
-    @species = species # initializes with species set to human and cannot be changed
+  attr_accessor :pets, :cats, :owner, :mood, :count
+  attr_writer :dogs
+  attr_reader :species, :name
+
+  def initialize(name, species = "human")
+    @name = name
+    @species = species
+    @@all << self
   end
 
-  def species
-    @species = human
-  end
-
-  def self.all
-    @@all
+  def name
+    @name
   end
 
   def say_species
-    puts "I am a #{@species}." # can say its species
+    return "I am a #{@species}."
   end
 
-  def owner_count
-    self.owner_count = self.owner.length
+  def cats     #expected to eq 3
+    Cat.all.select { |cats| cats.owner == self }
   end
 
-end
+  def dogs      #expected to eq 3
+    Dog.all.select { |dogs| dogs.owner == self }
+  end
+
+  def buy_cat(cats)
+    Cat.new(cats, self)
+  end
+
+  def buy_dog(dogs)
+    Dog.new(dogs, self)
+  end
+
+  def walk_dogs
+    dogs.select { |dogs| dogs.mood = "happy" }
+  end
+
+  def feed_cats
+    cats.select { |cats| cats.mood = "happy" }
+  end
+
+  def sell_pets
+    cats.each do |cat|
+    cat.mood = "nervous"
+    cat.owner = nil
+    end
+    dogs.each do |dog|
+    dog.mood = "nervous"
+    dog.owner = nil
+    end
+  end
+
+  def list_pets
+    num_dogs = self.dogs.count
+    num_cats = self.cats.count
+    "I have #{num_dogs} dog(s), and #{num_cats} cat(s)."
+  end
+
+    def self.all
+      @@all  #expect(Owner.all).to include(@owner)
+    end
+
+    def self.count
+      @@all.size
+    end
+
+    def self.reset_all
+      @@all.clear
+    end
+  end
