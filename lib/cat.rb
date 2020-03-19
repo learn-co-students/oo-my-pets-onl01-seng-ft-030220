@@ -1,4 +1,3 @@
-
 class Cat
 @@cats = []
   attr_accessor :mood, :owner, :cats
