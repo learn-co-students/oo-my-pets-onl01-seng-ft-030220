@@ -1,5 +1,6 @@
 require 'pry'
 class Owner
+
   attr_accessor
   attr_reader :name, :species
   
@@ -40,19 +41,25 @@ class Owner
   end 
   
   def buy_cat(cat)
-    cat = Cat.new(name, self) 
+    cat = Cat.new(cat, self)
   end 
   
-  def buy_dog(dog)
-    dog = Dog.new(name, self) 
+  def buy_dog(name)
+    name = Dog.new(name, self)
   end 
   
   def walk_dogs
-    self.dog.mood = "happy"
+    Dog.all.select do |dog|
+      dog.owner == self
+    dog.mood = "happy"
+    end 
   end 
   
-  def feed_dogs
-    self.cat.mood = "happy"
+  def feed_cats
+    Cat.all.select do |cat|
+      cat.owner == self
+    cat.mood = "happy"
+    end 
   end 
 
   def sell_pets
@@ -61,6 +68,7 @@ class Owner
      dog.mood  = "nervous"
      dog.owner = nil 
     end 
+    
     Cat.all.collect do |cat|
      cat.owner == self
      cat.mood = "nervous"
@@ -68,11 +76,11 @@ class Owner
     end 
   end 
 
-def list_pets 
-  d_count = self.dogs.count
-  c_count = self.cats.count
-  return "I have #{d_count} dog(s), and #{c_count} cat(s)."
-end 
+  def list_pets 
+    d_count = self.dogs.count
+    c_count = self.cats.count
+    return "I have #{d_count} dog(s), and #{c_count} cat(s)."
+  end 
 
   
 end 

@@ -11,11 +11,9 @@ class Cat
     @@all << self
     @owner = owner
   end 
-  
+
   def self.all
     @@all
   end 
   
-  
-
 end
