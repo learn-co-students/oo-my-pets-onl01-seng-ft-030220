@@ -69,16 +69,9 @@ class Owner
   end 
 
 def list_pets 
-  Dog.all.each do |dog|
-      if dog.owner == self
-        d_count << dog 
-      dogs = dcount.count 
-   end 
-  Cat.all.collect do |cat|
-     ccount = (cat.owner == self)
-     cats = ccount.count
-   end 
-  "I have" + dogs + " dog(s), and " + cats + " cat(s)."
+  d_count = self.dogs.count
+  c_count = self.cats.count
+  return "I have #{d_count} dog(s), and #{c_count} cat(s)."
 end 
 
   
